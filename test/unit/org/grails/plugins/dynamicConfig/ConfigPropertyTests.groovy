@@ -97,35 +97,35 @@ class ConfigPropertyTests extends GrailsUnitTestCase {
         ConfigProperty property = new ConfigProperty('x', '', DataType.INTEGER)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("default.blank.message", property.errors["value"])
+        assertEquals("blank", property.errors["value"])
     }
 
     void testCreate_Invalid_Integer() {
         ConfigProperty property = new ConfigProperty('x', 'y', DataType.INTEGER)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.Integer", property.errors["value"])
+        assertEquals("configProperty.typeMismatch.java.lang.Integer", property.errors["value"])
     }
 
     void testCreate_Invalid_Float() {
         ConfigProperty property = new ConfigProperty('x', 'y', DataType.FLOAT)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.Float", property.errors["value"])
+        assertEquals("configProperty.typeMismatch.java.lang.Float", property.errors["value"])
     }
 
     void testCreate_Invalid_Long() {
         ConfigProperty property = new ConfigProperty('x', 'y', DataType.LONG)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.Long", property.errors["value"])
+        assertEquals("configProperty.typeMismatch.java.lang.Long", property.errors["value"])
     }
 
     void testCreate_Invalid_DOUBLE() {
         ConfigProperty property = new ConfigProperty('x', 'y', DataType.DOUBLE)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.Double", property.errors["value"])
+        assertEquals("configProperty.typeMismatch.java.lang.Double", property.errors["value"])
     }
 
     void testCreate_Two_Properties_Same_Name() {
@@ -135,26 +135,12 @@ class ConfigPropertyTests extends GrailsUnitTestCase {
         ConfigProperty property2 = new ConfigProperty('x', 'z', DataType.STRING)
         property2.save()
         assertEquals(1, ConfigProperty.count())
-        assertEquals("default.not.unique.message", property2.errors["name"])
+        assertEquals("unique", property2.errors["name"])
     }
 
     void testCreate_Valid_Name2() {
         ConfigProperty property = new ConfigProperty('firstName.lastName', 'y', DataType.STRING).save();
         assertEquals(1, ConfigProperty.count())
-    }
-
-    void testCreate_Invalid_Name1() {
-        ConfigProperty property = new ConfigProperty('x y', 'value1', DataType.STRING)
-        property.save()
-        assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.String", property.errors["value"])
-    }
-
-    void testCreate_Invalid_Name2() {
-        ConfigProperty property = new ConfigProperty('x/y', 'value1', DataType.STRING)
-        property.save()
-        assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.String", property.errors["value"])
     }
 
     void testCreate_Valid_Name3() {
@@ -169,25 +155,39 @@ class ConfigPropertyTests extends GrailsUnitTestCase {
         assertEquals('value1', CH.config.x.y)
     }
 
+    void testCreate_Invalid_Name1() {
+        ConfigProperty property = new ConfigProperty('x y', 'value1', DataType.STRING)
+        property.save()
+        assertEquals(0, ConfigProperty.count())
+        assertEquals("configProperty.not.matches.message", property.errors["name"])
+    }
+
+    void testCreate_Invalid_Name2() {
+        ConfigProperty property = new ConfigProperty('x/y', 'value1', DataType.STRING)
+        property.save()
+        assertEquals(0, ConfigProperty.count())
+        assertEquals("configProperty.not.matches.message", property.errors["name"])
+    }
+
     void testCreate_Invalid_Name3() {
         ConfigProperty property = new ConfigProperty('.x.y', 'value1', DataType.STRING)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.String", property.errors["value"])
+        assertEquals("configProperty.not.matches.message", property.errors["name"])
     }
 
     void testCreate_Invalid_Name4() {
         ConfigProperty property = new ConfigProperty('x.y.', 'value1', DataType.STRING)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.String", property.errors["value"])
+        assertEquals("configProperty.not.matches.message", property.errors["name"])
     }
 
     void testCreate_Invalid_Name5() {
         ConfigProperty property = new ConfigProperty('1x', 'value1', DataType.STRING)
         property.save()
         assertEquals(0, ConfigProperty.count())
-        assertEquals("typeMismatch.java.lang.String", property.errors["value"])
+        assertEquals("configProperty.not.matches.message", property.errors["name"])
     }
 
 }

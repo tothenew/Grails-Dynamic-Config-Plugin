@@ -1,14 +1,14 @@
 package org.grails.plugins.dynamicConfig
 
 enum DataType {
-    STRING('String'),
-    BOOLEAN('Boolean'),
-    INTEGER('Integer'),
-    LONG('Long'),
-    FLOAT('Float'),    
-    DOUBLE('Double')
+    STRING('STRING'),
+    BOOLEAN('BOOLEAN'),
+    INTEGER('INTEGER'),
+    LONG('LONG'),
+    FLOAT('FLOAT'),
+    DOUBLE('DOUBLE')
 
-    private final String name
+    final String name
 
     DataType(String name){
         this.name = name

@@ -7,24 +7,28 @@ class ConfigProperty {
 
     String name
     String value
-    DataType type = DataType.STRING
+    DataType type
 
-    ConfigProperty(){}
+    ConfigProperty() {}
 
-    ConfigProperty(String name, String value, DataType type){
+    ConfigProperty(String name, String value, DataType type) {
         this.name = name
         this.value = value
         this.type = type
     }
 
     static constraints = {
-        name(unique: true, blank: false)
+        name(unique: true, blank: false, validator: {String val, obj ->
+            if (!(val ==~ /([a-zA-Z_]([a-zA-Z0-9_])*)(\.([a-zA-Z_]([a-zA-Z0-9_])*))*/)) {
+                return 'configProperty.not.matches.message'
+            }
+        })
         value(blank: false, validator: {String val, obj ->
             switch (obj.type) {
-                case DataType.INTEGER: return (val.isInteger() ? true : 'typeMismatch.java.lang.Integer'); break;
-                case DataType.LONG: return (val.isLong() ? true : 'typeMismatch.java.lang.Long'); break;
-                case DataType.FLOAT: return (val.isFloat() ? true : 'typeMismatch.java.lang.Float'); break;
-                case DataType.DOUBLE: return (val.isDouble() ? true : 'typeMismatch.java.lang.Double'); break;
+                case DataType.INTEGER: return (val.isInteger() ? true : 'configProperty.typeMismatch.java.lang.Integer'); break;
+                case DataType.LONG: return (val.isLong() ? true : 'configProperty.typeMismatch.java.lang.Long'); break;
+                case DataType.FLOAT: return (val.isFloat() ? true : 'configProperty.typeMismatch.java.lang.Float'); break;
+                case DataType.DOUBLE: return (val.isDouble() ? true : 'configProperty.typeMismatch.java.lang.Double'); break;
             }
         })
     }
