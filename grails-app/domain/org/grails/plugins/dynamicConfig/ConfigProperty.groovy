@@ -29,6 +29,10 @@ class ConfigProperty {
         })
     }
 
+    String toString() {
+        return name
+    }
+
     def beforeInsert = {
         updateConfigMap()
     }
