@@ -6,8 +6,6 @@ class ConfigProperty {
 
     static config = ConfigurationHolder.config
 
-    Date dateCreated
-    Date lastUpdated
     String name
     String value
 
