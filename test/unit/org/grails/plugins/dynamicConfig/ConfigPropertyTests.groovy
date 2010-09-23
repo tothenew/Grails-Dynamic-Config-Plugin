@@ -14,10 +14,22 @@ class ConfigPropertyTests extends GrailsUnitTestCase {
         super.tearDown()
     }
 
-    void testCreate_Valid_STRING() {
+    void testCreate_Valid_STRING_1() {
         new ConfigProperty('x', 'y').save();
         assertEquals(1, ConfigProperty.count())
         assertEquals('y', CH.config.x)
+    }
+
+    void testCreate_Valid_STRING_2() {
+        new ConfigProperty('x', '"y"').save();
+        assertEquals(1, ConfigProperty.count())
+        assertEquals('"y"', CH.config.x)
+    }
+
+    void testCreate_Valid_STRING_3() {
+        new ConfigProperty('x', "'y's").save();
+        assertEquals(1, ConfigProperty.count())
+        assertEquals("'y's", CH.config.x)
     }
 
     void testCreate_Valid_LIST() {

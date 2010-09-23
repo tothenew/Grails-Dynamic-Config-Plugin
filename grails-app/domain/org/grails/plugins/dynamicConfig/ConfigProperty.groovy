@@ -38,7 +38,7 @@ class ConfigProperty {
 
     void updateConfigMap() {
         Boolean useQuotes = !(((value ==~ /\[.*]/)) || DefaultGroovyMethods.isNumber(value) || DefaultGroovyMethods.isFloat(value) || value in ['true', 'false'])
-        String objectString = useQuotes ? "${name}='${value}'" : "${name}=${value}"
+        String objectString = useQuotes ? "${name}='''${value}'''" : "${name}=${value}"
         ConfigObject configObject = new ConfigSlurper().parse(objectString)
         CH.setConfig(configObject)
     }
