@@ -20,6 +20,15 @@ class ConfigPropertyTests extends GrailsUnitTestCase {
         assertEquals('y', CH.config.x)
     }
 
+    void testDelete_Valid_STRING_1() {
+        ConfigProperty configProperty = new ConfigProperty('x', 'y').save();
+        assertEquals(1, ConfigProperty.count())
+        assertEquals('y', CH.config.x)
+        configProperty.delete()
+        assertEquals(0, ConfigProperty.count())
+        assertFalse(CH.config.flatten().containsKey('x'))
+    }
+
     void testCreate_Valid_STRING_2() {
         new ConfigProperty('x', '"y"').save();
         assertEquals(1, ConfigProperty.count())

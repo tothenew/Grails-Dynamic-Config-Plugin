@@ -28,6 +28,10 @@ class ConfigProperty {
         return name
     }
 
+    def beforeDelete = {
+        CH.config.remove(name)
+    }
+
     def beforeInsert = {
         updateConfigMap()
     }
