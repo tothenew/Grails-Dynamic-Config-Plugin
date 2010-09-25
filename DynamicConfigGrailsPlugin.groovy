@@ -13,8 +13,8 @@ class DynamicConfigGrailsPlugin {
     ]
 
     // TODO Fill in these fields
-    def author = "Aman Aggarwal / Himanshu Seth"
-    def authorEmail = "aman@intelligrape.com / himanshu@intelligrape.com"
+    def author = "Aman Aggarwal / Abhishek Tejpaul"
+    def authorEmail = "aman@intelligrape.com / abhishek@intelligrape.com"
     def title = "Dynamic-Config-Plugin"
     def description = '''
 This plugin is created using Grails 1.3.4 and gives your application the ability to dynamically change the config properties as defined in Config.groovy.
