@@ -5,28 +5,22 @@ class DynamicConfigBootStrap {
 
     def init = {servletContext ->
         if (!ConfigProperty.count()) {
-            ConfigurationHolder.config.each {key, value ->
-                loadValues("", key, value)
+            ConfigurationHolder.config.flatten().each {key, value ->
+                loadValues(key, value)
             }
         }
     }
 
-    void loadValues(String parentKey, String key, def value) {
-        String newParentKey = "${parentKey.size() > 0 ? parentKey + '.' : ''}${key}"
+    void loadValues(String key, def value) {
         try {
-            if (value && !(value instanceof Closure)) {
-                if (value instanceof Map) {
-                    value.each {k, v ->
-                        loadValues newParentKey, k, v
-                    }
-                } else {
-                    ConfigProperty configProperty = new ConfigProperty(name: newParentKey, value: value.toString()).save()
-                }
+            if (value && !((value instanceof List) || (value instanceof Closure))) {
+               if (!new ConfigProperty(name: key, value: value.toString()).save()) {
+                   ConfigProperty.findByName(key)?.value = value
+               }
             }
         } catch (Exception e) {
-            println "Exception ${e.message} for " + value.getClass() + " key : ${newParentKey}"
+            println "Exception ${e.message} for " + value + " key : ${key}"
         }
-
     }
 
     def destroy = {
