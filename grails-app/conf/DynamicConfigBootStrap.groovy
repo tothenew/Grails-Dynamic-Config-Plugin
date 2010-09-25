@@ -5,7 +5,7 @@ class DynamicConfigBootStrap {
 
     def init = {servletContext ->
         if (!ConfigProperty.count()) {
-            ConfigurationHolder.config.flatten().each {key, value ->
+            ConfigurationHolder.flatConfig.each {key, value ->
                 loadValues(key, value)
             }
         }
