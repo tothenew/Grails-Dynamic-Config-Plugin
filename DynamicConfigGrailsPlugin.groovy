@@ -19,7 +19,7 @@ class DynamicConfigGrailsPlugin {
     def description = '''
 This plugin is created using Grails 1.3.4 and gives your application the ability to dynamically change the config properties as defined in Config.groovy.
 This plugin is useful in situations where you need to make run-time changes in the behavior of your application through config properties.
-The documentation of the plugin can be found here: http://github.com/IntelliGrape/Grails-Dynamic-Config-Plugin/wiki
+The documentation of the plugin can be found here: [http://github.com/IntelliGrape/Grails-Dynamic-Config-Plugin/wiki]
 '''
 
     // URL to the plugin's documentation
