@@ -4,19 +4,22 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 class DynamicConfigBootStrap {
 
     def init = {servletContext ->
-        if (!ConfigProperty.count()) {
-            ConfigurationHolder.flatConfig.each {key, value ->
-                loadValues(key, value)
-            }
+        ConfigurationHolder.flatConfig.each {key, value ->
+            loadValues(key, value)
         }
     }
 
     void loadValues(String key, def value) {
         try {
-            if (value && !((value instanceof List) || (value instanceof Closure))) {
-               if (!new ConfigProperty(name: key, value: value.toString()).save()) {
-                   ConfigProperty.findByName(key)?.value = value
-               }
+            if (value?.toString() && !((value instanceof List) || (value instanceof Closure))) {
+                byte[] checksum = value.toString().encodeAsMD5Bytes()
+                ConfigProperty configProperty = ConfigProperty.findByName(key)
+                if (configProperty && (configProperty.checksum != checksum)) {
+                    configProperty.value = value
+                    configProperty.save()
+                } else {
+                    new ConfigProperty(name: key, value: value.toString(), checksum: checksum).save()
+                }
             }
         } catch (Exception e) {
             println "Exception ${e.message} for " + value + " key : ${key}"

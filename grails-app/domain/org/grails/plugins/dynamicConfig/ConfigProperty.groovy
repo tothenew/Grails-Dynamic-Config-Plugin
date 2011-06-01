@@ -7,6 +7,7 @@ class ConfigProperty {
 
     String name
     String value
+    byte[] checksum
 
     ConfigProperty() {}
 
