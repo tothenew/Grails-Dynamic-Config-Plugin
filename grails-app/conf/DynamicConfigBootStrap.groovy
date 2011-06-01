@@ -17,6 +17,7 @@ class DynamicConfigBootStrap {
                 ConfigProperty configProperty = ConfigProperty.findByName(key)
                 if (configProperty && (configProperty.checksum != checksum)) {
                     configProperty.value = value
+                    configProperty.checksum = checksum
                     configProperty.save()
                 } else {
                     new ConfigProperty(name: key, value: value.toString(), checksum: checksum).save()
