@@ -7,6 +7,7 @@ class DynamicConfigBootStrap {
         ConfigurationHolder.flatConfig.each {key, value ->
             loadValues(key, value)
         }
+        ConfigProperty.list()*.updateConfigMap()
     }
 
     void loadValues(String key, def value) {
